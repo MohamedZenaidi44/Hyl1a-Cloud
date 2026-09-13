@@ -27,7 +27,11 @@ export default {
       return new Response(response.body, { status: response.status, headers });
     } catch (err) {
       console.error(err);
-      return errorJson("Erreur serveur.", 500);
+      // Toujours renvoyer les headers CORS même sur erreur 500
+      const errResp = errorJson("Erreur serveur : " + (err.message || err), 500);
+      const h = new Headers(errResp.headers);
+      Object.entries(cors).forEach(([k, v]) => h.set(k, v));
+      return new Response(errResp.body, { status: 500, headers: h });
     }
   },
 };
