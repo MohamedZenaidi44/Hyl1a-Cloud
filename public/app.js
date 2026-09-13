@@ -647,6 +647,16 @@ $id("delete-note-btn").addEventListener("click", async () => {
   await loadNotes();
 });
 
+$id("save-note-btn").addEventListener("click", async () => {
+  if (!state.activeNoteId) return;
+  sfx("notify");
+  await saveActiveNote();
+  // Feedback visuel bref sur le bouton
+  const btn = $id("save-note-btn");
+  btn.textContent = "✓ Sauvegardé !";
+  setTimeout(() => { btn.textContent = "✓ Sauvegarder"; }, 1500);
+});
+
 // Auto-save
 function scheduleSave() {
   clearTimeout(state.saveTimer);

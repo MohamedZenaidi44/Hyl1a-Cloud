@@ -1775,7 +1775,11 @@ input, textarea { font:inherit; color:inherit; }
 }
 
 /* Editeur */
-.note-editor { flex:1; display:flex; flex-direction:column; padding: 0.9rem 1.2rem 0.8rem; min-width:0; gap:0; }
+.note-editor { flex:1; display:flex; flex-direction:column; padding: 0.9rem 1.2rem 0.8rem; min-width:0; gap:0;
+  background: rgba(0,20,40,0.55) !important; /* fond plus opaque pour la lecture */
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
 
 .note-editor input.note-title {
   background: none; border: none;
@@ -1851,6 +1855,21 @@ input, textarea { font:inherit; color:inherit; }
 .note-meta { display:flex; flex-direction:column; gap:1px; }
 .note-status-text { font-style:italic; }
 .note-counts { color: rgba(255,255,255,0.38); font-size:0.60rem; }
+.note-footer-actions { display:flex; gap:0.4rem; align-items:center; }
+.btn-save-note {
+  background: linear-gradient(135deg, rgba(0,200,255,0.55), rgba(0,120,255,0.45));
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 0.55rem;
+  color: #fff;
+  font-size: 0.72rem; font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 0.3rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(0,180,255,0.3);
+}
+.btn-save-note:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,180,255,0.5); }
+.btn-save-note:active { transform: scale(0.95); }
 
 
 /* ============================================================
