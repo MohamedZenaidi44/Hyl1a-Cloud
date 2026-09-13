@@ -1816,7 +1816,44 @@ input, textarea { font:inherit; color:inherit; }
 .tb-btn:hover  { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.50); transform:scale(1.07); }
 .tb-btn:active { transform: scale(0.93); }
 
-/* Zone de saisie principale */
+/* Color pickers */
+.tb-color-wrap {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 1.8rem; height: 1.6rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgba(255,255,255,0.20);
+  background: rgba(255,255,255,0.10);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.12s;
+  flex-direction: column;
+  gap: 1px;
+}
+.tb-color-wrap:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.50); }
+.tb-color-icon {
+  font-size: 0.72rem; font-weight: 900;
+  color: rgba(255,255,255,0.90);
+  line-height: 1;
+  pointer-events: none;
+}
+.tb-hl-icon { font-size: 0.8rem; color: #ffee55; }
+.tb-color-input {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+  width: 100%; height: 100%;
+  border: none; padding: 0;
+}
+/* Barre de couleur sous l'icone */
+.tb-color-bar {
+  width: 80%; height: 3px;
+  border-radius: 2px;
+  background: #ffffff;
+  pointer-events: none;
+  transition: background 0.15s;
+}
+
+
 .note-body-editor {
   flex: 1;
   min-height: 0;

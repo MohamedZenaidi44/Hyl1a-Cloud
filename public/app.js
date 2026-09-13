@@ -696,6 +696,9 @@ document.querySelectorAll(".tb-btn").forEach(btn => {
       case "ol":        document.execCommand("insertOrderedList");   break;
       case "code":      document.execCommand("formatBlock", false, "pre"); break;
       case "hr":        document.execCommand("insertHorizontalRule"); break;
+      case "alignLeft":   document.execCommand("justifyLeft");   break;
+      case "alignCenter": document.execCommand("justifyCenter"); break;
+      case "alignRight":  document.execCommand("justifyRight");  break;
       case "clear":     document.execCommand("removeFormat");   break;
     }
     scheduleSave();
@@ -709,6 +712,36 @@ $id("note-content").addEventListener("keydown", e => {
     saveActiveNote();
   }
 });
+
+// Couleur du texte
+const textColorInput = $id("tb-text-color");
+const textColorBar   = $id("tb-text-color-bar");
+if (textColorInput) {
+  textColorInput.addEventListener("input", () => {
+    const col = textColorInput.value;
+    if (textColorBar) textColorBar.style.background = col;
+  });
+  textColorInput.addEventListener("change", () => {
+    $id("note-content").focus();
+    document.execCommand("foreColor", false, textColorInput.value);
+    scheduleSave();
+  });
+}
+
+// Couleur de surlignage
+const hlColorInput = $id("tb-highlight-color");
+const hlColorBar   = $id("tb-hl-color-bar");
+if (hlColorInput) {
+  hlColorInput.addEventListener("input", () => {
+    const col = hlColorInput.value;
+    if (hlColorBar) hlColorBar.style.background = col;
+  });
+  hlColorInput.addEventListener("change", () => {
+    $id("note-content").focus();
+    document.execCommand("hiliteColor", false, hlColorInput.value);
+    scheduleSave();
+  });
+}
 
 // ============================================================
 // STOCKAGE
