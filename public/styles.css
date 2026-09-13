@@ -2001,12 +2001,12 @@ input, textarea { font:inherit; color:inherit; }
 /* Conteneur positionné */
 .music-player-bubble {
   position: fixed;
-  top: 1rem;
-  right: 1.2rem;
+  left: 1rem;
+  bottom: 8rem; /* juste au-dessus du bloc "Stockage" de la sidebar */
   z-index: 50;
   display: flex;
   align-items: center;
-  flex-direction: row-reverse; /* bulle à droite, panel s'étend à gauche */
+  flex-direction: row; /* bulle à gauche, panel s'étend vers la droite */
   gap: 0;
   animation: taskbar-rise 0.7s cubic-bezier(0.34,1.56,0.64,1) both 0.5s;
 }
@@ -2051,23 +2051,23 @@ input, textarea { font:inherit; color:inherit; }
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  padding: 0.5rem 0.6rem 0.5rem 0.8rem;
-  border-radius: 1.4rem 0 0 1.4rem;
+  padding: 0.5rem 0.8rem 0.5rem 0.6rem;
+  border-radius: 0 1.4rem 1.4rem 0;
   background: linear-gradient(rgba(0,30,60,0.80), rgba(0,15,40,0.85));
   border: 1px solid rgba(255,255,255,0.30);
-  border-right: none;
+  border-left: none;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   min-width: 0;
   max-width: 0;
   overflow: hidden;
   opacity: 0;
-  transform-origin: right center;
+  transform-origin: left center;
   transition:
     max-width 0.40s cubic-bezier(0.34,1.10,0.64,1),
     opacity   0.30s ease;
-  margin-right: -0.8rem;
-  padding-right: 1rem;
+  margin-left: -0.8rem;
+  padding-left: 1rem;
 }
 /* Etat ouvert */
 .music-player-bubble.expanded .music-expand-panel {
@@ -2075,7 +2075,7 @@ input, textarea { font:inherit; color:inherit; }
   opacity: 1;
 }
 .music-player-bubble.expanded .music-bubble-btn {
-  border-radius: 0 50% 50% 0;
+  border-radius: 50% 0 0 50%;
   box-shadow:
     inset 0 0 14px #94f6ffaa,
     0 0 12px rgba(0,200,255,0.55);
@@ -2145,7 +2145,8 @@ input, textarea { font:inherit; color:inherit; }
   .user-name { display: none; }
   .btn-upload-main span { display: none; }
   .btn-upload-main { margin: 0.4rem; padding: 0.4rem 0.6rem; }
-  .music-player { bottom: 0.5rem; right: 0.5rem; max-width: 160px; }
+  .music-player-bubble { bottom: 0.5rem; left: 0.5rem; }
+  .music-player-bubble.expanded .music-expand-panel { max-width: 140px; }
   .auth-card { padding: 2rem 1.4rem 1.6rem; -webkit-box-reflect: none; }
   .header-tools .tool-btn span { display: none; }
   .search-box { display: none; }
