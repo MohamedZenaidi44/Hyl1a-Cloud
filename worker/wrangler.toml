@@ -1,0 +1,19 @@
+name = "hylia-cloud-api"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Stockage des fichiers (photos, documents, etc.)
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "hylia-cloud-files"
+
+# Base de donnees (comptes, metadonnees fichiers, notes)
+[[d1_databases]]
+binding = "DB"
+database_name = "hylia-cloud-db"
+database_id = "75b13dab-b9f3-4e35-be45-fdcb42ed5112"
+
+# Utilise pour signer/verifier les cookies de session.
+# Change cette valeur et garde-la secrete (voir DEPLOY.md).
+[vars]
+ENVIRONMENT = "production"

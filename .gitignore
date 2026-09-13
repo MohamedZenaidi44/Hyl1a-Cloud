@@ -1,0 +1,36 @@
+# ============================================================
+# Hylia Cloud — .gitignore
+# ============================================================
+
+# Wrangler / Cloudflare (build cache, secrets, état local)
+worker/.wrangler/
+worker/node_modules/
+worker/dist/
+
+# Archives sources (trop lourdes pour GitHub — 43 Mo total)
+assets-source/
+
+# Dossiers d'extraction temporaire
+*-tmp/
+*-extract/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+Desktop.ini
+
+# Editeurs
+.vscode/settings.json
+*.swp
+*.swo
+
+# Secrets / env locaux (ne jamais push ça !)
+.env
+.env.local
+.dev.vars
+wrangler.dev.toml

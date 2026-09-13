@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Hylia Cloud — Stockage personnel de fichiers, photos et notes dans un design Frutiger Aero." />
+  <meta name="theme-color" content="#0a1a2e" />
+  <title>Hylia Cloud</title>
+
+  <!-- ✦ Favicon — Blue Luma (Super Mario Galaxy) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+<!-- ===================== FOND FRUTIGER AERO ===================== -->
+<div class="landscape" aria-hidden="true">
+  <img class="wallpaper-img" src="assets/wallpaper.jpg" alt="" />
+  <div class="sun-glow"></div>
+  <div class="cloud"></div><div class="cloud"></div>
+  <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
+</div>
+
+<div id="app">
+
+  <!-- ===================== ÉCRAN CONNEXION ===================== -->
+  <div id="login-screen" class="auth-screen">
+    <div class="auth-card glass">
+      <div class="auth-crest">
+        <div class="auth-orb">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 8.5L12 15L22 8.5L12 2Z" fill="rgba(255,255,255,0.92)" stroke-linejoin="round"/>
+            <path d="M6 12L12 15.5L18 12" stroke="rgba(255,255,255,0.70)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 15.5L12 19L18 15.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="auth-wordmark">Hylia Cloud</span>
+        <p class="auth-tagline">Votre espace de stockage personnel</p>
+      </div>
+      <div id="login-error" class="auth-error hidden"></div>
+      <form id="login-form">
+        <div class="field">
+          <label for="login-username">Nom d'utilisateur</label>
+          <input id="login-username" type="text" autocomplete="username" placeholder="votre_pseudo" required />
+        </div>
+        <div class="field">
+          <label for="login-password">Mot de passe</label>
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn-glossy btn-primary" id="login-submit-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          Se connecter
+        </button>
+      </form>
+      <div class="auth-switch">Pas encore de compte ? <button id="goto-signup" type="button">Créer un compte</button></div>
+    </div>
+  </div>
+
+  <!-- ===================== ÉCRAN INSCRIPTION ===================== -->
+  <div id="signup-screen" class="auth-screen hidden">
+    <div class="auth-card glass">
+      <div class="auth-crest">
+        <div class="auth-orb">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 8.5L12 15L22 8.5L12 2Z" fill="rgba(255,255,255,0.92)" stroke-linejoin="round"/>
+            <path d="M6 12L12 15.5L18 12" stroke="rgba(255,255,255,0.70)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 15.5L12 19L18 15.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="auth-wordmark">Hylia Cloud</span>
+        <p class="auth-tagline">Créez votre espace personnel gratuit</p>
+      </div>
+      <div id="signup-error" class="auth-error hidden"></div>
+      <form id="signup-form">
+        <div class="field">
+          <label for="signup-username">Nom d'utilisateur</label>
+          <input id="signup-username" type="text" autocomplete="username" placeholder="votre_pseudo" required />
+        </div>
+        <div class="field">
+          <label for="signup-password">Mot de passe</label>
+          <input id="signup-password" type="password" autocomplete="new-password" placeholder="8 caractères minimum" required minlength="8" />
+        </div>
+        <button type="submit" class="btn-glossy btn-primary" id="signup-submit-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          Créer mon compte
+        </button>
+      </form>
+      <div class="auth-switch">Déjà un compte ? <button id="goto-login" type="button">Se connecter</button></div>
+    </div>
+  </div>
+
+  <!-- ===================== INTERFACE MEGA-LIKE ===================== -->
+  <div id="desktop" class="mega-layout hidden">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar glass" id="sidebar">
+
+      <!-- Logo -->
+      <div class="sidebar-logo">
+        <div class="logo-orb">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 8.5L12 15L22 8.5L12 2Z" fill="rgba(255,255,255,0.92)"/>
+            <path d="M6 12L12 15.5L18 12" stroke="rgba(255,255,255,0.65)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M6 15.5L12 19L18 15.5" stroke="rgba(255,255,255,0.40)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">Hylia Cloud</span>
+      </div>
+
+      <!-- Bouton upload principal -->
+      <button class="btn-upload-main" id="sidebar-upload-btn">
+        <img src="assets/icons/crystal/action-up.png" alt="" />
+        Envoyer des fichiers
+      </button>
+      <input type="file" id="file-input" multiple class="hidden" />
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <div class="nav-label">Navigation</div>
+
+        <button class="nav-item active" data-view="files" id="nav-files">
+          <img src="assets/icons/crystal/folder-home.png" alt="" />
+          <span>Mes fichiers</span>
+        </button>
+
+        <button class="nav-item" data-view="photos" id="nav-photos">
+          <img src="assets/icons/crystal/folder-image.png" alt="" />
+          <span>Photos</span>
+        </button>
+
+        <button class="nav-item" data-view="videos" id="nav-videos">
+          <img src="assets/icons/crystal/folder-video.png" alt="" />
+          <span>Vidéos</span>
+        </button>
+
+        <button class="nav-item" data-view="music" id="nav-music">
+          <img src="assets/icons/crystal/folder-music.png" alt="" />
+          <span>Musique</span>
+        </button>
+
+        <button class="nav-item" data-view="docs" id="nav-docs">
+          <img src="assets/icons/crystal/folder-documents.png" alt="" />
+          <span>Documents</span>
+        </button>
+
+        <button class="nav-item" data-view="notes" id="nav-notes">
+          <img src="assets/icons/crystal/app-database.png" alt="" />
+          <span>Notes</span>
+        </button>
+
+        <div class="nav-label" style="margin-top:12px">Compte</div>
+
+        <button class="nav-item" data-view="trash" id="nav-trash">
+          <img src="assets/icons/crystal/trash.png" alt="" />
+          <span>Corbeille</span>
+        </button>
+      </nav>
+
+      <!-- Stockage -->
+      <div class="sidebar-storage">
+        <div class="storage-label">
+          <img src="assets/icons/crystal/network.png" alt="" />
+          <span>Stockage</span>
+        </div>
+        <div class="storage-bar-wrap">
+          <div class="storage-bar" id="storage-bar" style="width:0%"></div>
+        </div>
+        <div class="storage-text" id="storage-text">Calcul en cours…</div>
+      </div>
+
+      <!-- Utilisateur en bas -->
+      <div class="sidebar-user">
+        <div class="user-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.8" stroke-linecap="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span id="sidebar-username" class="user-name">—</span>
+        <button id="logout-btn" class="user-logout" title="Se déconnecter">
+          <img src="assets/icons/crystal/action-exit.png" alt="Déconnexion" />
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <main class="main-content" id="main-content">
+
+      <!-- Header de la zone principale -->
+      <header class="main-header glass">
+        <!-- Breadcrumb / titre de la vue -->
+        <div class="header-left">
+          <div class="breadcrumbs" id="main-breadcrumbs">
+            <span class="bc-item bc-root">Mes fichiers</span>
+          </div>
+        </div>
+
+        <!-- Barre d'outils -->
+        <div class="header-tools">
+          <!-- Recherche -->
+          <div class="search-box">
+            <img src="assets/icons/crystal/action-filefind.png" alt="Rechercher" class="search-icon" />
+            <input type="text" id="search-input" placeholder="Rechercher…" autocomplete="off" />
+          </div>
+
+          <!-- Nouveau dossier -->
+          <button class="tool-btn" id="new-folder-btn" title="Nouveau dossier">
+            <img src="assets/icons/crystal/action-new.png" alt="" />
+            <span>Nouveau dossier</span>
+          </button>
+
+          <!-- Bascule vue grille/liste -->
+          <div class="view-toggle">
+            <button class="view-btn active" id="view-grid-btn" title="Vue grille">
+              <img src="assets/icons/crystal/action-view-grid.png" alt="Grille" />
+            </button>
+            <button class="view-btn" id="view-list-btn" title="Vue liste">
+              <img src="assets/icons/crystal/action-view-list.png" alt="Liste" />
+            </button>
+          </div>
+
+          <!-- Horloge -->
+          <div class="clock-block">
+            <div id="clock" class="clock">--:--</div>
+            <div id="date"  class="date-label">--</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Zone de contenu scrollable -->
+      <div class="content-area" id="content-area">
+
+        <!-- ---- VUE FICHIERS ---- -->
+        <section id="view-files" class="view-section active">
+          <!-- Dropzone -->
+          <div class="dropzone-banner" id="dropzone">
+            <img src="assets/icons/crystal/action-up.png" alt="" />
+            <div>
+              <strong>Glissez vos fichiers ici</strong>
+              <span>ou cliquez sur « Envoyer des fichiers »</span>
+            </div>
+          </div>
+
+          <!-- Raccourcis dossiers rapides -->
+          <div class="quick-folders" id="quick-folders">
+            <div class="section-title">
+              <img src="assets/icons/crystal/folder-home.png" alt="" />
+              Accès rapide
+            </div>
+            <div class="quick-grid" id="quick-grid">
+              <div class="quick-item" data-quick="images">
+                <div class="quick-orb"><img src="assets/icons/crystal/folder-images.png" alt="" /></div>
+                <span>Images</span>
+              </div>
+              <div class="quick-item" data-quick="videos">
+                <div class="quick-orb"><img src="assets/icons/crystal/folder-video.png" alt="" /></div>
+                <span>Vidéos</span>
+              </div>
+              <div class="quick-item" data-quick="music">
+                <div class="quick-orb"><img src="assets/icons/crystal/folder-music.png" alt="" /></div>
+                <span>Musique</span>
+              </div>
+              <div class="quick-item" data-quick="docs">
+                <div class="quick-orb"><img src="assets/icons/crystal/folder-documents.png" alt="" /></div>
+                <span>Documents</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grille / liste de fichiers -->
+          <div class="section-title" id="files-section-title">
+            <img src="assets/icons/crystal/folder.png" alt="" />
+            Mes fichiers
+          </div>
+          <div id="file-grid" class="file-grid view-grid"></div>
+        </section>
+
+        <!-- ---- VUE PHOTOS ---- -->
+        <section id="view-photos" class="view-section">
+          <div class="section-title">
+            <img src="assets/icons/crystal/folder-image.png" alt="" />
+            Photos
+          </div>
+          <div class="photo-grid" id="photo-grid"></div>
+        </section>
+
+        <!-- ---- VUE VIDÉOS ---- -->
+        <section id="view-videos" class="view-section">
+          <div class="section-title">
+            <img src="assets/icons/crystal/folder-video.png" alt="" />
+            Vidéos
+          </div>
+          <div id="video-grid" class="file-grid view-grid"></div>
+        </section>
+
+        <!-- ---- VUE MUSIQUE ---- -->
+        <section id="view-music" class="view-section">
+          <div class="section-title">
+            <img src="assets/icons/crystal/folder-music.png" alt="" />
+            Musique
+          </div>
+          <div id="music-grid" class="file-grid view-grid"></div>
+        </section>
+
+        <!-- ---- VUE DOCUMENTS ---- -->
+        <section id="view-docs" class="view-section">
+          <div class="section-title">
+            <img src="assets/icons/crystal/folder-documents.png" alt="" />
+            Documents
+          </div>
+          <div id="docs-grid" class="file-grid view-grid"></div>
+        </section>
+
+        <!-- ---- VUE NOTES ---- -->
+        <section id="view-notes" class="view-section">
+          <div class="notes-layout">
+            <div class="notes-sidebar glass">
+              <button class="btn-secondary new-note-btn" id="new-note-btn">
+                <img src="assets/icons/crystal/action-new.png" alt="" />
+                Nouvelle note
+              </button>
+              <div id="notes-list-items"></div>
+            </div>
+            <div class="note-editor glass">
+              <input type="text" class="note-title" id="note-title" placeholder="Titre de la note…" />
+              <textarea id="note-content" placeholder="Commencez à écrire…"></textarea>
+              <div class="note-footer">
+                <span id="note-status">—</span>
+                <button class="btn-secondary btn-danger-soft" id="delete-note-btn">
+                  <img src="assets/icons/crystal/action-delete.png" alt="" />
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---- VUE CORBEILLE ---- -->
+        <section id="view-trash" class="view-section">
+          <div class="section-title">
+            <img src="assets/icons/crystal/trash.png" alt="" />
+            Corbeille
+          </div>
+          <div class="empty-state">
+            <img src="assets/icons/crystal/trash.png" alt="" />
+            <p>La corbeille est vide.</p>
+          </div>
+        </section>
+
+      </div><!-- /content-area -->
+    </main>
+
+    <!-- ===== PANNEAU DÉTAILS (côté droit, optionnel, se cache) ===== -->
+    <aside class="detail-panel glass hidden" id="detail-panel">
+      <div class="detail-header">
+        <span>Détails</span>
+        <button id="detail-close">✕</button>
+      </div>
+      <div class="detail-body" id="detail-body"></div>
+    </aside>
+
+  </div><!-- /mega-layout -->
+
+</div><!-- /app -->
+
+<!-- ===== LIGHTBOX ===== -->
+<div id="lightbox" class="lightbox hidden">
+  <button class="lightbox-close" id="lightbox-close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" width="16" height="16">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+  <img id="lightbox-img" src="" alt="" />
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<!-- ===== MODAL NOUVEAU DOSSIER ===== -->
+<div id="folder-modal" class="modal-overlay hidden">
+  <div class="modal-box glass">
+    <div class="modal-title">
+      <img src="assets/icons/crystal/folder.png" alt="" />
+      Nouveau dossier
+    </div>
+    <input type="text" id="folder-name-input" placeholder="Nom du dossier…" class="modal-input" maxlength="80" />
+    <div class="modal-actions">
+      <button class="btn-secondary" id="folder-modal-cancel">Annuler</button>
+      <button class="btn-glossy" id="folder-modal-confirm">
+        <img src="assets/icons/crystal/action-new.png" alt="" style="width:18px;height:18px;" />
+        Créer
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MENU CONTEXTUEL ===== -->
+<div id="context-menu" class="context-menu glass hidden">
+  <button class="ctx-item" id="ctx-download">
+    <img src="assets/icons/crystal/action-down.png" alt="" />
+    Télécharger
+  </button>
+  <button class="ctx-item" id="ctx-rename">
+    <img src="assets/icons/crystal/action-edit.png" alt="" />
+    Renommer
+  </button>
+  <div class="ctx-divider"></div>
+  <button class="ctx-item ctx-danger" id="ctx-delete">
+    <img src="assets/icons/crystal/action-delete.png" alt="" />
+    Supprimer
+  </button>
+</div>
+
+<!-- ===== WIDGET MUSIQUE D'AMBIANCE ===== -->
+<div id="music-player" class="music-player glass">
+  <button id="music-toggle-btn" class="music-toggle" title="Play / Pause">
+    <span id="music-icon">🎵</span>
+  </button>
+  <div class="music-info">
+    <span class="music-title">Aisha — Dancing Fantasy</span>
+    <input
+      type="range"
+      id="music-volume-slider"
+      class="music-slider"
+      min="0" max="1" step="0.01"
+      value="0.12"
+      title="Volume"
+    />
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
