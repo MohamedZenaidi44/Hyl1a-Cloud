@@ -288,6 +288,8 @@
         <!-- ---- VUE NOTES ---- -->
         <section id="view-notes" class="view-section">
           <div class="notes-layout">
+
+            <!-- Colonne gauche : liste des notes -->
             <div class="notes-sidebar glass">
               <button class="btn-secondary new-note-btn" id="new-note-btn">
                 <img src="assets/icons/crystal/action-new.png" alt="" />
@@ -295,11 +297,52 @@
               </button>
               <div id="notes-list-items"></div>
             </div>
+
+            <!-- Colonne droite : éditeur enrichi -->
             <div class="note-editor glass">
+
+              <!-- Titre -->
               <input type="text" class="note-title" id="note-title" placeholder="Titre de la note…" />
-              <textarea id="note-content" placeholder="Commencez à écrire…"></textarea>
+
+              <!-- Barre d'outils formatage -->
+              <div class="note-toolbar">
+                <div class="toolbar-group">
+                  <button class="tb-btn" data-cmd="bold"        title="Gras (Ctrl+B)">      <b>B</b> </button>
+                  <button class="tb-btn" data-cmd="italic"      title="Italique (Ctrl+I)">  <i>I</i> </button>
+                  <button class="tb-btn" data-cmd="underline"   title="Souligné (Ctrl+U)">  <u>U</u> </button>
+                  <button class="tb-btn" data-cmd="strike"      title="Baré">              <s>S</s>  </button>
+                </div>
+                <div class="toolbar-sep"></div>
+                <div class="toolbar-group">
+                  <button class="tb-btn" data-cmd="h1"          title="Titre H1">H1</button>
+                  <button class="tb-btn" data-cmd="h2"          title="Titre H2">H2</button>
+                </div>
+                <div class="toolbar-sep"></div>
+                <div class="toolbar-group">
+                  <button class="tb-btn" data-cmd="ul"          title="Liste à puces">•—</button>
+                  <button class="tb-btn" data-cmd="ol"          title="Liste numérotée">1.</button>
+                  <button class="tb-btn" data-cmd="code"        title="Bloc code">&lt;/&gt;</button>
+                  <button class="tb-btn" data-cmd="hr"          title="Séparateur">—</button>
+                </div>
+                <div class="toolbar-sep"></div>
+                <div class="toolbar-group">
+                  <button class="tb-btn" data-cmd="clear"       title="Effacer le formatage">✕</button>
+                </div>
+              </div>
+
+              <!-- Zone de texte principale -->
+              <div id="note-content"
+                   class="note-body-editor"
+                   contenteditable="true"
+                   spellcheck="true"
+                   data-placeholder="Commencez à écrire…"></div>
+
+              <!-- Pied de page -->
               <div class="note-footer">
-                <span id="note-status">—</span>
+                <div class="note-meta">
+                  <span id="note-status" class="note-status-text">—</span>
+                  <span class="note-counts" id="note-counts">0 mot · 0 caractère</span>
+                </div>
                 <button class="btn-secondary btn-danger-soft" id="delete-note-btn">
                   <img src="assets/icons/crystal/action-delete.png" alt="" />
                   Supprimer

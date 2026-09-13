@@ -595,46 +595,71 @@ function renderNotesList() {
   });
 }
 
+// ============================================================
+// NOTES — éditeur enrichi (contenteditable)
+// ============================================================
+function getNoteBody() {
+  return $id("note-content").innerHTML || "";
+}
+function setNoteBody(html) {
+  $id("note-content").innerHTML = html || "";
+  updateCounts();
+}
+
+function updateCounts() {
+  const el = $id("note-content");
+  if (!el) return;
+  const text = el.innerText || "";
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const chars = text.replace(/\n/g, "").length;
+  const counter = $id("note-counts");
+  if (counter) counter.textContent = `${words} mot${words > 1 ? "s" : ""} · ${chars} caractère${chars > 1 ? "s" : ""}`;
+}
+
 function selectNote(id) {
   state.activeNoteId = id;
   const note = state.notes.find(n => n.id === id);
   if (!note) return clearEditor();
   $id("note-title").value = note.title || "";
-  $id("note-content").value = note.content || "";
-  $id("note-status").textContent = `Modifie le ${new Date(note.updated_at).toLocaleString("fr-FR")}`;
+  setNoteBody(note.content || "");
+  $id("note-status").textContent = `Modifié le ${new Date(note.updated_at).toLocaleString("fr-FR")}`;
   renderNotesList();
 }
 
 function clearEditor() {
   state.activeNoteId = null;
   $id("note-title").value = "";
-  $id("note-content").value = "";
+  setNoteBody("");
   $id("note-status").textContent = "";
 }
 
+// Nouvelle note + suppression
 $id("new-note-btn").addEventListener("click", async () => {
+  sfx("balloon");
   const { id } = await api("/api/notes", { method: "POST", body: JSON.stringify({ title: "Nouvelle note", content: "" }) });
   await loadNotes();
   selectNote(id);
 });
 $id("delete-note-btn").addEventListener("click", async () => {
   if (!state.activeNoteId || !confirm("Supprimer cette note ?")) return;
+  sfx("delete");
   await api(`/api/notes/${state.activeNoteId}`, { method: "DELETE" });
   await loadNotes();
 });
 
+// Auto-save
 function scheduleSave() {
   clearTimeout(state.saveTimer);
   $id("note-status").textContent = "Enregistrement…";
+  updateCounts();
   state.saveTimer = setTimeout(saveActiveNote, 700);
 }
-
 async function saveActiveNote() {
   if (!state.activeNoteId) return;
-  const title = $id("note-title").value;
-  const content = $id("note-content").value;
+  const title   = $id("note-title").value;
+  const content = getNoteBody();
   await api(`/api/notes/${state.activeNoteId}`, { method: "PATCH", body: JSON.stringify({ title, content }) });
-  $id("note-status").textContent = `Modifie le ${new Date().toLocaleString("fr-FR")}`;
+  $id("note-status").textContent = `Sauvegardé à ${new Date().toLocaleTimeString("fr-FR", {hour:"2-digit",minute:"2-digit"})}`;
   const note = state.notes.find(n => n.id === state.activeNoteId);
   if (note) { note.title = title; note.content = content; }
   renderNotesList();
@@ -642,6 +667,38 @@ async function saveActiveNote() {
 
 $id("note-title").addEventListener("input", scheduleSave);
 $id("note-content").addEventListener("input", scheduleSave);
+
+// Barre d'outils — commandes de formatage
+document.querySelectorAll(".tb-btn").forEach(btn => {
+  btn.addEventListener("mousedown", e => {
+    e.preventDefault(); // garde le focus dans l'éditeur
+    const cmd = btn.dataset.cmd;
+    const editor = $id("note-content");
+    editor.focus();
+    switch (cmd) {
+      case "bold":      document.execCommand("bold");           break;
+      case "italic":    document.execCommand("italic");         break;
+      case "underline": document.execCommand("underline");      break;
+      case "strike":    document.execCommand("strikeThrough");  break;
+      case "h1":        document.execCommand("formatBlock", false, "h2"); break;
+      case "h2":        document.execCommand("formatBlock", false, "h3"); break;
+      case "ul":        document.execCommand("insertUnorderedList"); break;
+      case "ol":        document.execCommand("insertOrderedList");   break;
+      case "code":      document.execCommand("formatBlock", false, "pre"); break;
+      case "hr":        document.execCommand("insertHorizontalRule"); break;
+      case "clear":     document.execCommand("removeFormat");   break;
+    }
+    scheduleSave();
+  });
+});
+
+// Raccourcis clavier dans l'éditeur
+$id("note-content").addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+    e.preventDefault();
+    saveActiveNote();
+  }
+});
 
 // ============================================================
 // STOCKAGE
@@ -664,7 +721,7 @@ async function updateStorageBar() {
 // ============================================================
 const ambientAudio = new Audio("assets/ambient.mp3");
 ambientAudio.loop   = true;
-ambientAudio.volume = 0.12; // 12% — discret
+ambientAudio.volume = 0.28; // 28% — fond musical agréable
 
 let musicStarted = false;
 
