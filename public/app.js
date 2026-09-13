@@ -1,7 +1,7 @@
 // ===========================================================
 // Hylia Cloud — app.js  (structure MEGA-like)
 // ===========================================================
-const API_BASE = "http://localhost:8787";
+const API_BASE = "https://hylia-cloud-api.mohzn44.workers.dev";
 
 // ============================================================
 // SFX — Sons Windows 7
@@ -117,8 +117,7 @@ function showToast(msg, type = "info") {
 // ============================================================
 // AUTH
 // ============================================================
-$id("goto-signup").addEventListener("click", () => { sfx("click"); hide($id("login-screen")); show($id("signup-screen")); });
-$id("goto-login").addEventListener("click",  () => { sfx("click"); hide($id("signup-screen")); show($id("login-screen")); });
+// Signup désactivé — formulaire retiré du HTML
 
 $id("login-form").addEventListener("submit", async e => {
   e.preventDefault();
@@ -134,19 +133,7 @@ $id("login-form").addEventListener("submit", async e => {
   } catch (err) { sfx("error"); errBox.textContent = err.message; show(errBox); }
 });
 
-$id("signup-form").addEventListener("submit", async e => {
-  e.preventDefault();
-  const errBox = $id("signup-error");
-  hide(errBox);
-  try {
-    const data = await api("/api/auth/signup", {
-      method: "POST",
-      body: JSON.stringify({ username: $id("signup-username").value.trim(), password: $id("signup-password").value }),
-    });
-    sfx("logon");
-    onLoggedIn(data.user);
-  } catch (err) { sfx("error"); errBox.textContent = err.message; show(errBox); }
-});
+
 
 $id("logout-btn").addEventListener("click", async () => {
   sfx("logoff");
@@ -161,7 +148,6 @@ $id("logout-btn").addEventListener("click", async () => {
 function onLoggedIn(user) {
   state.user = user;
   hide($id("login-screen"));
-  hide($id("signup-screen"));
   show($id("desktop"));
   $id("sidebar-username").textContent = user.username;
   startClock();

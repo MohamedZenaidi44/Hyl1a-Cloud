@@ -3,15 +3,18 @@ import { handleLogin, handleLogout, requireUser, handleSetup } from "./auth.js";
 import { listFiles, createFolder, uploadFile, downloadFile, deleteFile, renameFile } from "./files.js";
 import { listNotes, createNote, updateNote, deleteNote } from "./notes.js";
 
-// IMPORTANT : remplace par l'URL de ton frontend une fois deploye (ex: "https://hylia-cloud.vercel.app")
-// Utiliser "*" fonctionne pour tester en local mais desactive l'envoi de cookies cross-site.
-const ALLOWED_ORIGIN = "http://127.0.0.1:5500";
+// Origines autorisees (production Vercel + dev local)
+const ALLOWED_ORIGINS = [
+  "https://hyl1a-cloud.vercel.app",
+  "http://127.0.0.1:5500",
+  "http://localhost:5500",
+];
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin") || "";
-    const cors = corsHeaders(origin, ALLOWED_ORIGIN);
+    const cors = corsHeaders(origin, ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]);
 
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: cors });
