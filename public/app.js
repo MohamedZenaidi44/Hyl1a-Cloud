@@ -716,28 +716,45 @@ $id("note-content").addEventListener("keydown", e => {
 // Couleur du texte
 const textColorInput = $id("tb-text-color");
 const textColorBar   = $id("tb-text-color-bar");
+// Couleur de surlignage
+const hlColorInput   = $id("tb-highlight-color");
+const hlColorBar     = $id("tb-hl-color-bar");
+
+// Sauvegarde / restauration de la sélection (perdue quand le color picker s'ouvre)
+let _savedRange = null;
+function saveSelection() {
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) _savedRange = sel.getRangeAt(0).cloneRange();
+}
+function restoreSelection() {
+  if (!_savedRange) return;
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(_savedRange);
+}
+
+// Sauvegarde la sélection quand on clique sur un color picker
+document.querySelectorAll(".tb-color-input").forEach(inp => {
+  inp.addEventListener("mousedown", saveSelection);
+});
+
 if (textColorInput) {
   textColorInput.addEventListener("input", () => {
-    const col = textColorInput.value;
-    if (textColorBar) textColorBar.style.background = col;
+    if (textColorBar) textColorBar.style.background = textColorInput.value;
   });
   textColorInput.addEventListener("change", () => {
-    $id("note-content").focus();
+    restoreSelection();
     document.execCommand("foreColor", false, textColorInput.value);
     scheduleSave();
   });
 }
 
-// Couleur de surlignage
-const hlColorInput = $id("tb-highlight-color");
-const hlColorBar   = $id("tb-hl-color-bar");
 if (hlColorInput) {
   hlColorInput.addEventListener("input", () => {
-    const col = hlColorInput.value;
-    if (hlColorBar) hlColorBar.style.background = col;
+    if (hlColorBar) hlColorBar.style.background = hlColorInput.value;
   });
   hlColorInput.addEventListener("change", () => {
-    $id("note-content").focus();
+    restoreSelection();
     document.execCommand("hiliteColor", false, hlColorInput.value);
     scheduleSave();
   });
