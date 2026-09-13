@@ -745,42 +745,81 @@ function startAmbientMusic() {
   });
 }
 
-// Bouton play/pause
-const musicBtn    = $id("music-toggle-btn");
-const musicSlider = $id("music-volume-slider");
-const musicIcon   = $id("music-icon");
+const musicBtn      = $id("music-toggle-btn");
+const musicSlider   = $id("music-volume-slider");
+const musicIcon     = $id("music-icon");
+const musicBubble   = $id("music-player");
+
+let _musicCollapseTimer = null;
+
+function expandMusic() {
+  if (!musicBubble) return;
+  musicBubble.classList.add("expanded");
+  resetCollapseTimer();
+}
+function collapseMusic() {
+  if (!musicBubble) return;
+  musicBubble.classList.remove("expanded");
+  clearTimeout(_musicCollapseTimer);
+}
+function resetCollapseTimer() {
+  clearTimeout(_musicCollapseTimer);
+  _musicCollapseTimer = setTimeout(collapseMusic, 2000);
+}
+
+function updateMusicIcon() {
+  if (!musicIcon) return;
+  if (ambientAudio.paused) { musicIcon.textContent = "🔇"; return; }
+  musicIcon.textContent = ambientAudio.volume < 0.35 ? "🎵" : "🎶";
+}
 
 if (musicBtn) {
   musicBtn.addEventListener("click", e => {
     e.stopPropagation();
+    const isExpanded = musicBubble.classList.contains("expanded");
+
+    if (!isExpanded) {
+      // Premier clic : juste expand
+      expandMusic();
+      return;
+    }
+
+    // Clic quand déjà expanded : toggle play/pause
     if (ambientAudio.paused) {
       ambientAudio.play();
-      musicBtn.classList.remove("muted");
-      if (musicIcon) musicIcon.textContent = ambientAudio.volume < 0.4 ? "🎵" : "🎶";
+      musicBtn.classList.remove("paused");
     } else {
       ambientAudio.pause();
-      musicBtn.classList.add("muted");
-      if (musicIcon) musicIcon.textContent = "🔇";
+      musicBtn.classList.add("paused");
     }
+    updateMusicIcon();
+    resetCollapseTimer();
   });
 }
 
-// Slider de volume
+// Slider volume — reset le timer à chaque interaction
 if (musicSlider) {
   musicSlider.value = String(ambientAudio.volume);
   musicSlider.addEventListener("input", e => {
     e.stopPropagation();
     const vol = parseFloat(musicSlider.value);
     ambientAudio.volume = vol;
-    if (musicIcon) {
-      musicIcon.textContent = vol === 0 ? "🔇" : vol < 0.4 ? "🎵" : "🎶";
-    }
+    updateMusicIcon();
     if (vol > 0 && ambientAudio.paused) {
       ambientAudio.play();
-      if (musicBtn) musicBtn.classList.remove("muted");
+      if (musicBtn) musicBtn.classList.remove("paused");
     }
+    resetCollapseTimer(); // reset les 2s à chaque mouvement du slider
   });
+
+  // Hover sur le panneau — empêche la fermeture si on survole
+  const panel = $id("music-expand-panel");
+  if (panel) {
+    panel.addEventListener("mouseenter", () => clearTimeout(_musicCollapseTimer));
+    panel.addEventListener("mouseleave", () => resetCollapseTimer());
+  }
 }
+
 
 // ============================================================
 // PANNEAU DÉTAILS

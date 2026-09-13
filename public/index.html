@@ -432,20 +432,14 @@
 </div>
 
 <!-- ===== WIDGET MUSIQUE D'AMBIANCE ===== -->
-<div id="music-player" class="music-player glass">
-  <button id="music-toggle-btn" class="music-toggle" title="Play / Pause">
+<div id="music-player" class="music-player-bubble">
+  <button id="music-toggle-btn" class="music-bubble-btn" title="Play / Pause">
     <span id="music-icon">🎵</span>
   </button>
-  <div class="music-info">
-    <span class="music-title">Aisha — Dancing Fantasy</span>
-    <input
-      type="range"
-      id="music-volume-slider"
-      class="music-slider"
-      min="0" max="1" step="0.01"
-      value="0.12"
-      title="Volume"
-    />
+  <div class="music-expand-panel" id="music-expand-panel">
+    <span class="music-title-text">Aisha — Dancing Fantasy</span>
+    <input type="range" id="music-volume-slider" class="music-slider"
+      min="0" max="1" step="0.01" value="0.28" title="Volume" />
   </div>
 </div>
 
