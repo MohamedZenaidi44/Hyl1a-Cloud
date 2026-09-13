@@ -32,20 +32,28 @@ function validUsername(username) {
   return typeof username === "string" && /^[a-zA-Z0-9_\-]{3,20}$/.test(username);
 }
 
-export async function handleSignup(request, env, cors) {
+// handleSignup est intentionnellement non-exporte pour bloquer toute inscription publique.
+
+// handleSetup : cree le compte admin UNE SEULE FOIS si la base est vide
+export async function handleSetup(request, env, cors) {
+  // Verifie qu'aucun utilisateur n'existe deja (protection one-shot)
+  const count = await env.DB.prepare("SELECT COUNT(*) as n FROM users").first();
+  if (count && count.n > 0) {
+    return errorJson("Setup deja effectue. Compte existant.", 403);
+  }
+
   const body = await request.json().catch(() => null);
-  if (!body) return errorJson("Requete invalide", 400);
+  if (!body || !body.username || !body.password) {
+    return errorJson("username et password requis.", 400);
+  }
   const { username, password } = body;
 
   if (!validUsername(username)) {
-    return errorJson("Nom d'utilisateur invalide (3-20 caracteres, lettres/chiffres/_/-).", 400);
+    return errorJson("Nom d'utilisateur invalide (3-20 car, lettres/chiffres/_/-).", 400);
   }
-  if (typeof password !== "string" || password.length < 8) {
-    return errorJson("Le mot de passe doit faire au moins 8 caracteres.", 400);
+  if (typeof password !== "string" || password.length < 6) {
+    return errorJson("Mot de passe trop court (min 6 car).", 400);
   }
-
-  const existing = await env.DB.prepare("SELECT id FROM users WHERE username = ?").bind(username).first();
-  if (existing) return errorJson("Ce nom d'utilisateur est deja pris.", 409);
 
   const { hash, salt } = await hashPassword(password);
   const id = newId();

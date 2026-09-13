@@ -175,19 +175,9 @@ async function checkSession() {
   try {
     const data = await api("/api/auth/me");
     onLoggedIn(data.user);
-  } catch (_) { await autoLogin(); }
-}
-
-async function autoLogin() {
-  const u = { username: "testlocal", password: "testlocal123" };
-  try {
-    onLoggedIn((await api("/api/auth/login", { method: "POST", body: JSON.stringify(u) })).user);
   } catch (_) {
-    try {
-      onLoggedIn((await api("/api/auth/signup", { method: "POST", body: JSON.stringify(u) })).user);
-    } catch (err) {
-      showToast("Impossible de joindre l'API : " + err.message, "error");
-    }
+    // Pas de session active — affiche le formulaire de connexion
+    show($id("login-screen"));
   }
 }
 

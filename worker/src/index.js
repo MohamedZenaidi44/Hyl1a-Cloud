@@ -1,5 +1,5 @@
 import { errorJson, corsHeaders } from "./utils.js";
-import { handleSignup, handleLogin, handleLogout, requireUser } from "./auth.js";
+import { handleLogin, handleLogout, requireUser, handleSetup } from "./auth.js";
 import { listFiles, createFolder, uploadFile, downloadFile, deleteFile, renameFile } from "./files.js";
 import { listNotes, createNote, updateNote, deleteNote } from "./notes.js";
 
@@ -34,9 +34,10 @@ async function route(request, env, url, cors) {
   const method = request.method;
 
   // ---- Auth (public) ----
-  if (pathname === "/api/auth/signup" && method === "POST") return handleSignup(request, env, cors);
-  if (pathname === "/api/auth/login" && method === "POST") return handleLogin(request, env, cors);
-  if (pathname === "/api/auth/logout" && method === "POST") return handleLogout(request, env, cors);
+  // /api/auth/signup est DÉSACTIVÉ — seul /api/setup (one-shot) peut créer un compte
+  if (pathname === "/api/setup"        && method === "POST") return handleSetup(request, env, cors);
+  if (pathname === "/api/auth/login"   && method === "POST") return handleLogin(request, env, cors);
+  if (pathname === "/api/auth/logout"  && method === "POST") return handleLogout(request, env, cors);
 
   if (pathname === "/api/auth/me" && method === "GET") {
     const user = await requireUser(request, env);
