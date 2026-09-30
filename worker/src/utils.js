@@ -81,13 +81,16 @@ export function clearSessionCookie() {
 }
 
 // ---- CORS ----
-// Adapte ALLOWED_ORIGIN dans index.js a l'URL de ton frontend une fois deploye.
+// Les origines autorisees sont listees dans index.js (ALLOWED_ORIGINS).
+// Range / Content-Range sont necessaires pour la lecture video/audio (seek).
 export function corsHeaders(origin, allowedOrigin) {
-  const allow = allowedOrigin === "*" ? "*" : origin === allowedOrigin ? origin : allowedOrigin;
   return {
-    "Access-Control-Allow-Origin": allow,
+    "Access-Control-Allow-Origin": allowedOrigin,
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, Range",
+    "Access-Control-Expose-Headers": "Content-Length, Content-Range, Accept-Ranges, Content-Disposition",
+    "Access-Control-Max-Age": "86400",
+    "Vary": "Origin",
   };
 }

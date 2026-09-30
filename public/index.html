@@ -3,21 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Hylia Cloud — Stockage personnel de fichiers, photos et notes dans un design Frutiger Aero." />
-  <meta name="theme-color" content="#0a1a2e" />
-  <title>Hylia Cloud</title>
+  <meta name="description" content="Hyl1a Cloud — Stockage personnel de fichiers, photos et notes." />
+  <meta name="theme-color" content="#090909" />
+  <title>Hyl1a Cloud</title>
 
   <!-- ✦ Favicon — Blue Luma (Super Mario Galaxy) -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
 
   <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
 <body>
 
-<!-- ===================== FOND FRUTIGER AERO ===================== -->
+<!-- ===================== FOND ===================== -->
 <div class="landscape" aria-hidden="true">
   <img class="wallpaper-img" src="assets/wallpaper.jpg" alt="" />
   <div class="sun-glow"></div>
@@ -28,7 +26,7 @@
 <div id="app">
 
   <!-- ===================== ÉCRAN CONNEXION ===================== -->
-  <div id="login-screen" class="auth-screen">
+  <div id="login-screen" class="auth-screen hidden">
     <div class="auth-card glass">
       <div class="auth-crest">
         <div class="auth-orb">
@@ -38,14 +36,14 @@
             <path d="M6 15.5L12 19L18 15.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <span class="auth-wordmark">Hylia Cloud</span>
-        <p class="auth-tagline">Votre espace de stockage personnel</p>
+        <span class="auth-wordmark">Hyl1a Cloud</span>
+        <p class="auth-tagline">Mon espace de stockage personnel</p>
       </div>
       <div id="login-error" class="auth-error hidden"></div>
       <form id="login-form">
         <div class="field">
           <label for="login-username">Nom d'utilisateur</label>
-          <input id="login-username" type="text" autocomplete="username" placeholder="votre_pseudo" required />
+          <input id="login-username" type="text" autocomplete="username" placeholder="mon_pseudo" required />
         </div>
         <div class="field">
           <label for="login-password">Mot de passe</label>
@@ -63,7 +61,7 @@
 
 
 
-  <!-- ===================== INTERFACE MEGA-LIKE ===================== -->
+  <!-- ===================== INTERFACE HYL1A CLOUD ===================== -->
   <div id="desktop" class="mega-layout hidden">
 
     <!-- ===== SIDEBAR ===== -->
@@ -78,13 +76,13 @@
             <path d="M6 15.5L12 19L18 15.5" stroke="rgba(255,255,255,0.40)" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
         </div>
-        <span class="logo-text">Hylia Cloud</span>
+        <span class="logo-text">Hyl1a Cloud</span>
       </div>
 
       <!-- Bouton upload principal -->
       <button class="btn-upload-main" id="sidebar-upload-btn">
-        <img src="assets/icons/crystal/action-up.png" alt="" />
-        Envoyer des fichiers
+        <span class="ui-icon" aria-hidden="true"></span>
+        Envoyer mes fichiers
       </button>
       <input type="file" id="file-input" multiple class="hidden" />
 
@@ -93,40 +91,40 @@
         <div class="nav-label">Navigation</div>
 
         <button class="nav-item active" data-view="files" id="nav-files">
-          <img src="assets/icons/crystal/folder-home.png" alt="" />
+          <span class="ui-icon" aria-hidden="true"></span>
           <span>Mes fichiers</span>
         </button>
 
         <button class="nav-item" data-view="photos" id="nav-photos">
-          <img src="assets/icons/crystal/folder-image.png" alt="" />
-          <span>Photos</span>
+          <span class="ui-icon" aria-hidden="true"></span>
+          <span>Mes photos</span>
         </button>
 
         <button class="nav-item" data-view="videos" id="nav-videos">
-          <img src="assets/icons/crystal/folder-video.png" alt="" />
-          <span>Vidéos</span>
+          <span class="ui-icon" aria-hidden="true"></span>
+          <span>Mes vidéos</span>
         </button>
 
         <button class="nav-item" data-view="music" id="nav-music">
-          <img src="assets/icons/crystal/folder-music.png" alt="" />
-          <span>Musique</span>
+          <span class="ui-icon" aria-hidden="true"></span>
+          <span>Ma musique</span>
         </button>
 
         <button class="nav-item" data-view="docs" id="nav-docs">
-          <img src="assets/icons/crystal/folder-documents.png" alt="" />
-          <span>Documents</span>
+          <span class="ui-icon" aria-hidden="true"></span>
+          <span>Mes documents</span>
         </button>
 
         <button class="nav-item" data-view="notes" id="nav-notes">
-          <img src="assets/icons/crystal/app-database.png" alt="" />
-          <span>Notes</span>
+          <span class="ui-icon" aria-hidden="true"></span>
+          <span>Mes notes</span>
         </button>
 
         <div class="nav-label" style="margin-top:12px">Compte</div>
 
         <button class="nav-item" data-view="trash" id="nav-trash">
-          <img src="assets/icons/crystal/trash.png" alt="" />
-          <span>Corbeille</span>
+          <span class="ui-icon" aria-hidden="true"></span>
+          <span>Ma corbeille</span>
         </button>
       </nav>
 
@@ -144,7 +142,7 @@
       <!-- Stockage -->
       <div class="sidebar-storage">
         <div class="storage-label">
-          <img src="assets/icons/crystal/network.png" alt="" />
+          <span class="ui-icon" aria-hidden="true"></span>
           <span>Stockage</span>
         </div>
         <div class="storage-bar-wrap">
@@ -162,7 +160,7 @@
         </div>
         <span id="sidebar-username" class="user-name">—</span>
         <button id="logout-btn" class="user-logout" title="Se déconnecter">
-          <img src="assets/icons/crystal/action-exit.png" alt="Déconnexion" />
+          <span class="ui-icon" aria-hidden="true"></span>
         </button>
       </div>
 
@@ -182,25 +180,29 @@
 
         <!-- Barre d'outils -->
         <div class="header-tools">
+          <button class="top-upload-btn" id="top-upload-btn" type="button">
+            Envoyer
+          </button>
+
           <!-- Recherche -->
           <div class="search-box">
-            <img src="assets/icons/crystal/action-filefind.png" alt="Rechercher" class="search-icon" />
-            <input type="text" id="search-input" placeholder="Rechercher…" autocomplete="off" />
+            <span class="ui-icon" aria-hidden="true"></span>
+            <input type="text" id="search-input" placeholder="Rechercher dans mes fichiers…" autocomplete="off" />
           </div>
 
           <!-- Nouveau dossier -->
           <button class="tool-btn" id="new-folder-btn" title="Nouveau dossier">
-            <img src="assets/icons/crystal/action-new.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             <span>Nouveau dossier</span>
           </button>
 
           <!-- Bascule vue grille/liste -->
           <div class="view-toggle">
             <button class="view-btn active" id="view-grid-btn" title="Vue grille">
-              <img src="assets/icons/crystal/action-view-grid.png" alt="Grille" />
+              <span class="ui-icon" aria-hidden="true"></span>
             </button>
             <button class="view-btn" id="view-list-btn" title="Vue liste">
-              <img src="assets/icons/crystal/action-view-list.png" alt="Liste" />
+              <span class="ui-icon" aria-hidden="true"></span>
             </button>
           </div>
 
@@ -219,43 +221,43 @@
         <section id="view-files" class="view-section active">
           <!-- Dropzone -->
           <div class="dropzone-banner" id="dropzone">
-            <img src="assets/icons/crystal/action-up.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             <div>
-              <strong>Glissez vos fichiers ici</strong>
-              <span>ou cliquez sur « Envoyer des fichiers »</span>
+              <strong>Déposer mes fichiers ici</strong>
+              <span>ou cliquez sur « Envoyer mes fichiers »</span>
             </div>
           </div>
 
           <!-- Raccourcis dossiers rapides -->
           <div class="quick-folders" id="quick-folders">
             <div class="section-title">
-              <img src="assets/icons/crystal/folder-home.png" alt="" />
+              <span class="ui-icon" aria-hidden="true"></span>
               Accès rapide
             </div>
             <div class="quick-grid" id="quick-grid">
               <div class="quick-item" data-quick="images">
-                <div class="quick-orb"><img src="assets/icons/crystal/folder-images.png" alt="" /></div>
+                <div class="quick-orb"><span class="ui-icon" aria-hidden="true"></span></div>
                 <span>Images</span>
               </div>
               <div class="quick-item" data-quick="videos">
-                <div class="quick-orb"><img src="assets/icons/crystal/folder-video.png" alt="" /></div>
-                <span>Vidéos</span>
+                <div class="quick-orb"><span class="ui-icon" aria-hidden="true"></span></div>
+                <span>Mes vidéos</span>
               </div>
               <div class="quick-item" data-quick="music">
-                <div class="quick-orb"><img src="assets/icons/crystal/folder-music.png" alt="" /></div>
-                <span>Musique</span>
+                <div class="quick-orb"><span class="ui-icon" aria-hidden="true"></span></div>
+                <span>Ma musique</span>
               </div>
               <div class="quick-item" data-quick="docs">
-                <div class="quick-orb"><img src="assets/icons/crystal/folder-documents.png" alt="" /></div>
-                <span>Documents</span>
+                <div class="quick-orb"><span class="ui-icon" aria-hidden="true"></span></div>
+                <span>Mes documents</span>
               </div>
             </div>
           </div>
 
           <!-- Grille / liste de fichiers -->
           <div class="section-title" id="files-section-title">
-            <img src="assets/icons/crystal/folder.png" alt="" />
-            Mes fichiers
+            <span class="ui-icon" aria-hidden="true"></span>
+            <span id="files-section-label">Mes fichiers</span>
           </div>
           <div id="file-grid" class="file-grid view-grid"></div>
         </section>
@@ -263,7 +265,7 @@
         <!-- ---- VUE PHOTOS ---- -->
         <section id="view-photos" class="view-section">
           <div class="section-title">
-            <img src="assets/icons/crystal/folder-image.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             Photos
           </div>
           <div class="photo-grid" id="photo-grid"></div>
@@ -272,7 +274,7 @@
         <!-- ---- VUE VIDÉOS ---- -->
         <section id="view-videos" class="view-section">
           <div class="section-title">
-            <img src="assets/icons/crystal/folder-video.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             Vidéos
           </div>
           <div id="video-grid" class="file-grid view-grid"></div>
@@ -281,7 +283,7 @@
         <!-- ---- VUE MUSIQUE ---- -->
         <section id="view-music" class="view-section">
           <div class="section-title">
-            <img src="assets/icons/crystal/folder-music.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             Musique
           </div>
           <div id="music-grid" class="file-grid view-grid"></div>
@@ -290,7 +292,7 @@
         <!-- ---- VUE DOCUMENTS ---- -->
         <section id="view-docs" class="view-section">
           <div class="section-title">
-            <img src="assets/icons/crystal/folder-documents.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             Documents
           </div>
           <div id="docs-grid" class="file-grid view-grid"></div>
@@ -303,7 +305,7 @@
             <!-- Colonne gauche : liste des notes -->
             <div class="notes-sidebar glass">
               <button class="btn-secondary new-note-btn" id="new-note-btn">
-                <img src="assets/icons/crystal/action-new.png" alt="" />
+                <span class="ui-icon" aria-hidden="true"></span>
                 Nouvelle note
               </button>
               <div id="notes-list-items"></div>
@@ -380,7 +382,7 @@
                     ✓ Sauvegarder
                   </button>
                   <button class="btn-secondary btn-danger-soft" id="delete-note-btn">
-                    <img src="assets/icons/crystal/action-delete.png" alt="" />
+                    <span class="ui-icon" aria-hidden="true"></span>
                     Supprimer
                   </button>
                 </div>
@@ -392,11 +394,11 @@
         <!-- ---- VUE CORBEILLE ---- -->
         <section id="view-trash" class="view-section">
           <div class="section-title">
-            <img src="assets/icons/crystal/trash.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             Corbeille
           </div>
           <div class="empty-state">
-            <img src="assets/icons/crystal/trash.png" alt="" />
+            <span class="ui-icon" aria-hidden="true"></span>
             <p>La corbeille est vide.</p>
           </div>
         </section>
@@ -417,6 +419,9 @@
 
 </div><!-- /app -->
 
+<!-- ===== BOUTON HAUT DE PAGE ===== -->
+<button id="to-top-btn" class="to-top-btn hidden" type="button" title="Haut de page" aria-label="Haut de page">↑</button>
+
 <!-- ===== LIGHTBOX ===== -->
 <div id="lightbox" class="lightbox hidden">
   <button class="lightbox-close" id="lightbox-close">
@@ -425,6 +430,8 @@
     </svg>
   </button>
   <img id="lightbox-img" src="" alt="" />
+  <video id="lightbox-video" class="hidden" controls playsinline></video>
+  <audio id="lightbox-audio" class="hidden" controls></audio>
   <div class="lightbox-caption" id="lightbox-caption"></div>
 </div>
 
@@ -432,14 +439,14 @@
 <div id="folder-modal" class="modal-overlay hidden">
   <div class="modal-box glass">
     <div class="modal-title">
-      <img src="assets/icons/crystal/folder.png" alt="" />
+      <span class="ui-icon" aria-hidden="true"></span>
       Nouveau dossier
     </div>
     <input type="text" id="folder-name-input" placeholder="Nom du dossier…" class="modal-input" maxlength="80" />
     <div class="modal-actions">
       <button class="btn-secondary" id="folder-modal-cancel">Annuler</button>
       <button class="btn-glossy" id="folder-modal-confirm">
-        <img src="assets/icons/crystal/action-new.png" alt="" style="width:18px;height:18px;" />
+        <span class="ui-icon" aria-hidden="true"></span>
         Créer
       </button>
     </div>
@@ -449,16 +456,16 @@
 <!-- ===== MENU CONTEXTUEL ===== -->
 <div id="context-menu" class="context-menu glass hidden">
   <button class="ctx-item" id="ctx-download">
-    <img src="assets/icons/crystal/action-down.png" alt="" />
+    <span class="ui-icon" aria-hidden="true"></span>
     Télécharger
   </button>
   <button class="ctx-item" id="ctx-rename">
-    <img src="assets/icons/crystal/action-edit.png" alt="" />
+    <span class="ui-icon" aria-hidden="true"></span>
     Renommer
   </button>
   <div class="ctx-divider"></div>
   <button class="ctx-item ctx-danger" id="ctx-delete">
-    <img src="assets/icons/crystal/action-delete.png" alt="" />
+    <span class="ui-icon" aria-hidden="true"></span>
     Supprimer
   </button>
 </div>

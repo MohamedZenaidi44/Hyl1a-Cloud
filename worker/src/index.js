@@ -17,7 +17,7 @@ export default {
     const cors = corsHeaders(origin, ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]);
 
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: cors });
+      return new Response(null, { status: 204, headers: cors });
     }
 
     try {

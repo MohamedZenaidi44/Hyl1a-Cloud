@@ -40,19 +40,16 @@ npx wrangler d1 execute hylia-cloud-db --remote --file=./schema.sql
 
 ## 4. Configurer l'origine autorisée (CORS)
 
-Dans `worker/src/index.js`, remplace :
+Dans `worker/src/index.js`, ajoute l'URL exacte de ton site dans la liste `ALLOWED_ORIGINS` :
 
 ```js
-const ALLOWED_ORIGIN = "*";
+const ALLOWED_ORIGINS = [
+  "https://hylia-cloud.vercel.app",
+  "http://localhost:5500",
+];
 ```
 
-par l'URL exacte de ton site une fois déployé, par exemple :
-
-```js
-const ALLOWED_ORIGIN = "https://hylia-cloud.vercel.app";
-```
-
-(`*` fonctionne pour tester en local mais empêche l'envoi des cookies de session en production.)
+(Un `*` empêcherait l'envoi des cookies de session : l'origine doit être exacte.)
 
 ## 5. Déployer le Worker
 
@@ -96,7 +93,7 @@ bien dans **Photos** (si c'est une image) et essaie le **Bloc-notes**.
 ---
 
 ### Pistes d'évolution
-- Limite de stockage par utilisateur (actuellement seule la taille max par fichier est limitée, à 200 Mo, dans `worker/src/files.js`).
+- Limite de stockage par utilisateur (actuellement seule la taille max par fichier est limitée, à 100 Mo (limite des Workers), dans `worker/src/files.js`).
 - Renommage/déplacement de fichiers par glisser-déposer entre dossiers.
 - Partage de fichiers via lien public temporaire (signed URL R2).
 - Miniatures compressées côté serveur pour accélérer la galerie Photos.
